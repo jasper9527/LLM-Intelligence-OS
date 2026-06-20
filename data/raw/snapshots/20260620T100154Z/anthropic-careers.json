@@ -1,0 +1,67 @@
+{
+  "source_id": "anthropic-careers",
+  "collector_kind": "greenhouse_board",
+  "collected_at": "2026-06-20T10:01:58Z",
+  "items": [
+    {
+      "source_id": "anthropic-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "Account Executive, AI Native",
+      "url": "https://job-boards.greenhouse.io/anthropic/jobs/4461450008",
+      "published_at": "2026-06-08",
+      "summary": "San Francisco, CA | New York City, NY",
+      "content_type": "job_description",
+      "company": "Anthropic",
+      "team": "",
+      "location": "San Francisco, CA | New York City, NY",
+      "job_species": "general",
+      "common_keywords": []
+    },
+    {
+      "source_id": "anthropic-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "Account Executive - ASEAN",
+      "url": "https://job-boards.greenhouse.io/anthropic/jobs/5222180008",
+      "published_at": "2026-06-12",
+      "summary": "Sydney, Australia",
+      "content_type": "job_description",
+      "company": "Anthropic",
+      "team": "",
+      "location": "Sydney, Australia",
+      "job_species": "general",
+      "common_keywords": []
+    },
+    {
+      "source_id": "anthropic-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "Account Executive, Beneficial Deployments (French Speaking)",
+      "url": "https://job-boards.greenhouse.io/anthropic/jobs/5221910008",
+      "published_at": "2026-06-17",
+      "summary": "London, UK",
+      "content_type": "job_description",
+      "company": "Anthropic",
+      "team": "",
+      "location": "London, UK",
+      "job_species": "general",
+      "common_keywords": []
+    },
+    {
+      "source_id": "anthropic-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "Account Executive, Beneficial Deployments (Spanish Speaking)",
+      "url": "https://job-boards.greenhouse.io/anthropic/jobs/5221914008",
+      "published_at": "2026-06-02",
+      "summary": "London, UK",
+      "content_type": "job_description",
+      "company": "Anthropic",
+      "team": "",
+      "location": "London, UK",
+      "job_species": "general",
+      "common_keywords": []
+    }
+  ]
+}

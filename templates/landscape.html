@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% set page_description = "Official landscape cards stay stable; auto-generated draft updates remain separate until reviewed." %}
+{% block content %}
+  <div class="split">
+    <section class="stack">
+      {% for card in landscape %}
+        <article class="card" id="{{ card.name|lower|replace(' / ', '-')|replace(' ', '-') }}">
+          <div class="meta">Official card · last updated {{ card.last_updated }}</div>
+          <h2>{{ card.name }}</h2>
+          <p>{{ card.current_state }}</p>
+          <p><span class="tag good">watch: {{ card.watch_level }}</span></p>
+          <div class="grid">
+            <div>
+              <h3>Definition</h3>
+              <p>{{ card.definition }}</p>
+              <h3>Open questions</h3>
+              <ul class="inline-list">
+                {% for question in card.open_questions %}
+                  <li>{{ question }}</li>
+                {% else %}
+                  <li class="muted">No open questions recorded yet.</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div>
+              <h3>Recent developments</h3>
+              <ul class="inline-list">
+                {% for item in card.recent_developments %}
+                  <li>{{ item }}</li>
+                {% else %}
+                  <li class="muted">No recent developments recorded yet.</li>
+                {% endfor %}
+              </ul>
+              <h3>Negative signals</h3>
+              <ul class="inline-list">
+                {% for item in card.negative_signals %}
+                  <li>{{ item }}</li>
+                {% else %}
+                  <li class="muted">No negative signals recorded yet.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+
+    <aside class="stack">
+      <article class="card compact">
+        <h2>Pending Landscape Drafts</h2>
+        <ul class="inline-list">
+          {% for draft in landscape_drafts %}
+            <li>{{ draft.name }} · {{ draft.watch_level }} watch</li>
+          {% else %}
+            <li class="muted">No pending drafts.</li>
+          {% endfor %}
+        </ul>
+      </article>
+    </aside>
+  </div>
+{% endblock %}

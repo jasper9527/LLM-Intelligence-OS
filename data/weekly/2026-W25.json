@@ -1,0 +1,139 @@
+{
+  "report_id": "2026-W25",
+  "title": "Weekly Brief 2026-W25",
+  "period_start": "2026-06-14",
+  "period_end": "2026-06-20",
+  "generated_at": "2026-06-20T14:25:08Z",
+  "highlights": [
+    {
+      "title": "Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023",
+      "event_id": "6f132cab559c",
+      "summary": "arXiv:2606.19469v1 Announce Type: new Abstract: Undergraduate computer science is governed by international curricular guidelines revised about once a decade, yet programs lack a reliable, reproducible way to measure ho…",
+      "link": "research.html#6f132cab559c"
+    },
+    {
+      "title": "Hidden Anchors in Multi-Agent LLM Deliberation",
+      "event_id": "796151af8f21",
+      "summary": "arXiv:2606.19494v1 Announce Type: new Abstract: Multi-agent LLM deliberation, where agents exchange and revise answers over several rounds, is increasingly used to improve reasoning and accuracy, yet how and why it work…",
+      "link": "research.html#796151af8f21"
+    },
+    {
+      "title": "Diffusion Language Models: An Experimental Analysis",
+      "event_id": "58a0ea71033b",
+      "summary": "arXiv:2606.19475v1 Announce Type: new Abstract: Large Language Models (LLMs) have revolutionized language modeling through autoregressive generation, enabling strong performance across a wide range of tasks. Recently, D…",
+      "link": "research.html#58a0ea71033b"
+    },
+    {
+      "title": "Deontic Policies for Runtime Governance of Agentic AI Systems",
+      "event_id": "37c686459a4b",
+      "summary": "arXiv:2606.19464v1 Announce Type: new Abstract: Autonomous agentic AI systems driven by Large Language Models (LLMs) introduce a new class of security, privacy, and compliance challenges: an agent that can invoke tools,…",
+      "link": "research.html#37c686459a4b"
+    },
+    {
+      "title": "Account Executive, Beneficial Deployments (French Speaking)",
+      "event_id": "354c62a5ba53",
+      "summary": "London, UK",
+      "link": "jobs.html#354c62a5ba53"
+    }
+  ],
+  "job_changes": [
+    {
+      "title": "Account Executive, Beneficial Deployments (French Speaking)",
+      "event_id": "354c62a5ba53",
+      "summary": "London, UK",
+      "link": "jobs.html#354c62a5ba53"
+    },
+    {
+      "title": "AI Tutor - Chinese",
+      "event_id": "ea0396bbf144",
+      "summary": "Remote",
+      "link": "jobs.html#ea0396bbf144"
+    },
+    {
+      "title": "AI Tutor - Audio Editing",
+      "event_id": "d24ce1cc905b",
+      "summary": "Remote",
+      "link": "jobs.html#d24ce1cc905b"
+    },
+    {
+      "title": "AI Tutor - Arabic",
+      "event_id": "cd193c2eee58",
+      "summary": "Remote",
+      "link": "jobs.html#cd193c2eee58"
+    },
+    {
+      "title": "AI Healthcare and Administration Tutor",
+      "event_id": "717a2415da76",
+      "summary": "Remote",
+      "link": "jobs.html#717a2415da76"
+    }
+  ],
+  "research_changes": [
+    {
+      "title": "Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023",
+      "event_id": "6f132cab559c",
+      "summary": "arXiv:2606.19469v1 Announce Type: new Abstract: Undergraduate computer science is governed by international curricular guidelines revised about once a decade, yet programs lack a reliable, reproducible way to measure ho…",
+      "link": "research.html#6f132cab559c"
+    },
+    {
+      "title": "Hidden Anchors in Multi-Agent LLM Deliberation",
+      "event_id": "796151af8f21",
+      "summary": "arXiv:2606.19494v1 Announce Type: new Abstract: Multi-agent LLM deliberation, where agents exchange and revise answers over several rounds, is increasingly used to improve reasoning and accuracy, yet how and why it work…",
+      "link": "research.html#796151af8f21"
+    },
+    {
+      "title": "Diffusion Language Models: An Experimental Analysis",
+      "event_id": "58a0ea71033b",
+      "summary": "arXiv:2606.19475v1 Announce Type: new Abstract: Large Language Models (LLMs) have revolutionized language modeling through autoregressive generation, enabling strong performance across a wide range of tasks. Recently, D…",
+      "link": "research.html#58a0ea71033b"
+    },
+    {
+      "title": "Deontic Policies for Runtime Governance of Agentic AI Systems",
+      "event_id": "37c686459a4b",
+      "summary": "arXiv:2606.19464v1 Announce Type: new Abstract: Autonomous agentic AI systems driven by Large Language Models (LLMs) introduce a new class of security, privacy, and compliance challenges: an agent that can invoke tools,…",
+      "link": "research.html#37c686459a4b"
+    }
+  ],
+  "breakout": [],
+  "read_queue": [
+    {
+      "title": "Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023",
+      "event_id": "6f132cab559c",
+      "summary": "arXiv:2606.19469v1 Announce Type: new Abstract: Undergraduate computer science is governed by international curricular guidelines revised about once a decade, yet programs lack a reliable, reproducible way to measure ho…",
+      "link": "research.html#6f132cab559c"
+    },
+    {
+      "title": "Hidden Anchors in Multi-Agent LLM Deliberation",
+      "event_id": "796151af8f21",
+      "summary": "arXiv:2606.19494v1 Announce Type: new Abstract: Multi-agent LLM deliberation, where agents exchange and revise answers over several rounds, is increasingly used to improve reasoning and accuracy, yet how and why it work…",
+      "link": "research.html#796151af8f21"
+    },
+    {
+      "title": "Diffusion Language Models: An Experimental Analysis",
+      "event_id": "58a0ea71033b",
+      "summary": "arXiv:2606.19475v1 Announce Type: new Abstract: Large Language Models (LLMs) have revolutionized language modeling through autoregressive generation, enabling strong performance across a wide range of tasks. Recently, D…",
+      "link": "research.html#58a0ea71033b"
+    },
+    {
+      "title": "Deontic Policies for Runtime Governance of Agentic AI Systems",
+      "event_id": "37c686459a4b",
+      "summary": "arXiv:2606.19464v1 Announce Type: new Abstract: Autonomous agentic AI systems driven by Large Language Models (LLMs) introduce a new class of security, privacy, and compliance challenges: an agent that can invoke tools,…",
+      "link": "research.html#37c686459a4b"
+    },
+    {
+      "title": "Account Executive, Beneficial Deployments (French Speaking)",
+      "event_id": "354c62a5ba53",
+      "summary": "London, UK",
+      "link": "jobs.html#354c62a5ba53"
+    },
+    {
+      "title": "AI Tutor - Chinese",
+      "event_id": "ea0396bbf144",
+      "summary": "Remote",
+      "link": "jobs.html#ea0396bbf144"
+    }
+  ],
+  "open_questions": [
+    "Requires deeper reading to separate durable signal from short-term attention."
+  ]
+}

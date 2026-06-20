@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% set page_description = "Weekly navigation, breakout signals, fresh updates, and the current read queue." %}
+{% block content %}
+  <section class="grid">
+    <article class="kpi"><span class="muted">Published events</span><strong>{{ counts.published_events }}</strong></article>
+    <article class="kpi"><span class="muted">Research records</span><strong>{{ counts.papers }}</strong></article>
+    <article class="kpi"><span class="muted">Job signals</span><strong>{{ counts.jobs }}</strong></article>
+    <article class="kpi"><span class="muted">Landscape drafts</span><strong>{{ counts.landscape_drafts }}</strong></article>
+  </section>
+
+  <div class="split" style="margin-top:18px">
+    <section class="stack">
+      <article class="card">
+        <div class="section-title">
+          <h2>This Week's Important Signals</h2>
+          <a href="reports.html">Open reports</a>
+        </div>
+        {% if latest_weekly.highlights %}
+          <div class="list">
+            {% for item in latest_weekly.highlights %}
+              <article>
+                <h3><a href="{{ item.link }}">{{ item.title }}</a></h3>
+                <p class="muted">{{ item.summary }}</p>
+              </article>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="muted">Run collect, publish, and weekly generation to populate this navigation layer.</p>
+        {% endif %}
+      </article>
+
+      <article class="card">
+        <div class="section-title">
+          <h2>Latest Weekly Brief</h2>
+          <span class="muted">{{ latest_weekly.period_start }} to {{ latest_weekly.period_end }}</span>
+        </div>
+        <p class="callout">Weekly Brief stays short. It points you toward module pages instead of replacing them.</p>
+        <div class="grid">
+          <div>
+            <h3>Research changes</h3>
+            <ul class="inline-list">
+              {% for item in latest_weekly.research_changes %}
+                <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+              {% else %}
+                <li class="muted">No published research changes this week.</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h3>Job changes</h3>
+            <ul class="inline-list">
+              {% for item in latest_weekly.job_changes %}
+                <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+              {% else %}
+                <li class="muted">No published job changes this week.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="stack">
+      <article class="card compact">
+        <h2>Recent Updates</h2>
+        <ul class="inline-list">
+          {% for event in events[:6] %}
+            <li><a href="events.html#{{ event.id }}">{{ event.date }} · {{ event.title }}</a></li>
+          {% else %}
+            <li class="muted">No published events yet.</li>
+          {% endfor %}
+        </ul>
+      </article>
+
+      <article class="card compact">
+        <h2>Breakout Signals</h2>
+        {% for event in breakout_events %}
+          <div style="margin-bottom:10px">
+            <strong><a href="events.html#{{ event.id }}">{{ event.title }}</a></strong>
+            <div class="muted">{{ event.short_summary }}</div>
+          </div>
+        {% else %}
+          <p class="muted">No breakout-tagged events yet.</p>
+        {% endfor %}
+      </article>
+
+      <article class="card compact">
+        <h2>Read Queue</h2>
+        <ul class="inline-list">
+          {% for event in read_queue %}
+            <li><a href="events.html#{{ event.id }}">{{ event.title }}</a></li>
+          {% else %}
+            <li class="muted">No high-relevance items queued yet.</li>
+          {% endfor %}
+        </ul>
+      </article>
+    </section>
+  </div>
+{% endblock %}

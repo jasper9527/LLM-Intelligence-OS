@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Stream | LLM Intelligence OS</title>
+  <style>
+    :root{
+      --paper:#f7f0e3;
+      --ink:#1d2433;
+      --muted:#5f6779;
+      --border:#d8cdbb;
+      --card:#fffaf1;
+      --accent:#9f3f2e;
+      --accent-soft:#f1dfc0;
+      --success:#1d6b57;
+      --warn:#965e1f;
+      --danger:#9c2f2f;
+      --shadow:0 18px 45px rgba(29,36,51,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(159,63,46,.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(29,107,87,.08), transparent 24%),
+        linear-gradient(180deg, #fbf4e8 0%, var(--paper) 48%, #f4ecde 100%);
+      font-family:"Aptos","Segoe UI",sans-serif;
+      line-height:1.55;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .shell{max-width:1200px;margin:0 auto;padding:24px}
+    .hero{
+      padding:36px 0 14px;
+      border-bottom:1px solid rgba(216,205,187,.9);
+      margin-bottom:22px;
+    }
+    .eyebrow{
+      margin:0 0 8px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:12px;
+    }
+    h1,h2,h3{
+      font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+      margin:0 0 10px;
+      letter-spacing:-.02em;
+    }
+    h1{font-size:42px;line-height:1.05}
+    h2{font-size:28px}
+    h3{font-size:18px}
+    .hero p{max-width:820px;margin:10px 0 0;color:var(--muted)}
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+    nav a{
+      padding:10px 14px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,250,241,.72);
+      color:var(--ink);
+      font-size:14px;
+    }
+    nav a.active{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff8f1;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:18px;
+      align-items:start;
+    }
+    .stack{display:grid;gap:18px}
+    .card{
+      background:rgba(255,250,241,.92);
+      border:1px solid rgba(216,205,187,.9);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .card.compact{padding:14px}
+    .card .meta{color:var(--muted);font-size:14px;margin-bottom:12px}
+    .muted{color:var(--muted)}
+    .lede{
+      font-size:18px;
+      color:var(--muted);
+      max-width:840px;
+      margin-bottom:18px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:4px 10px;
+      margin:0 6px 6px 0;
+      border:1px solid rgba(159,63,46,.2);
+      background:var(--accent-soft);
+      color:var(--ink);
+      font-size:12px;
+      line-height:1.2;
+    }
+    .tag.good{background:rgba(29,107,87,.12);border-color:rgba(29,107,87,.2)}
+    .tag.warn{background:rgba(150,94,31,.12);border-color:rgba(150,94,31,.2)}
+    .tag.bad{background:rgba(156,47,47,.12);border-color:rgba(156,47,47,.2)}
+    .kpi{
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.4);
+      border:1px solid rgba(216,205,187,.9);
+    }
+    .kpi strong{display:block;font-size:24px}
+    .filters{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .filters label{
+      display:grid;
+      gap:6px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    select,input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fffdf8;
+      color:var(--ink);
+    }
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .list{
+      display:grid;
+      gap:16px;
+    }
+    .split{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:18px;
+    }
+    .inline-list{
+      margin:0;
+      padding-left:18px;
+    }
+    .callout{
+      border-left:4px solid var(--accent);
+      padding:12px 14px;
+      background:rgba(159,63,46,.08);
+      border-radius:0 12px 12px 0;
+      margin:12px 0;
+    }
+    .hidden{display:none!important}
+    footer{
+      padding:24px 0 36px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    @media (max-width: 900px){
+      .split{grid-template-columns:1fr}
+      h1{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <p class="eyebrow">Codex-native intelligence system</p>
+      <h1>Event Stream</h1>
+      <p>Canonical event stream with published-only filtering by source type, area, signal, credibility, and date.</p>
+      <nav>
+        <a href="index.html" class="">Home</a>
+        <a href="events.html" class="active">Events</a>
+        <a href="jobs.html" class="">Jobs</a>
+        <a href="research.html" class="">Research</a>
+        <a href="landscape.html" class="">Landscape</a>
+        <a href="sources.html" class="">Sources</a>
+        <a href="reports.html" class="">Reports</a>
+        <a href="drafts.html" class="">Drafts</a>
+      </nav>
+    </header>
+  <p class="lede">Everything enters here first. Research, hiring, weekly synthesis, and landscape work all derive from this stream.</p>
+  <section class="card">
+    <div class="section-title">
+      <h2>Filters</h2>
+      <span class="muted">12 published events</span>
+    </div>
+    <div class="filters">
+      <label>Date
+        <input id="filter-date" data-filter-control="date" type="date">
+      </label>
+      <label>Source type
+        <select id="filter-source" data-filter-control="source_type">
+          <option value="">All</option>
+            <option value="hiring">hiring</option>
+            <option value="paper_index">paper_index</option>
+        </select>
+      </label>
+      <label>Area tag
+        <select id="filter-area" data-filter-control="area_tags">
+          <option value="">All</option>
+            <option value="area:agent-tool-use-computer-use">area:agent-tool-use-computer-use</option>
+            <option value="area:multimodal-vlm-gui">area:multimodal-vlm-gui</option>
+            <option value="area:post-training-alignment">area:post-training-alignment</option>
+            <option value="area:reasoning-verifier-reward">area:reasoning-verifier-reward</option>
+            <option value="area:search-deep-research">area:search-deep-research</option>
+        </select>
+      </label>
+      <label>Signal tag
+        <select id="filter-signal" data-filter-control="signal_tags">
+          <option value="">All</option>
+            <option value="signal:jd">signal:jd</option>
+            <option value="signal:paper">signal:paper</option>
+        </select>
+      </label>
+      <label>Credibility
+        <select id="filter-credibility" data-filter-control="credibility">
+          <option value="">All</option>
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="list" id="event-list">
+      <article
+        class="card"
+        id="6f132cab559c"
+        data-filter-item
+        data-date="2026-06-20"
+        data-source_type="paper_index"
+        data-area_tags="area:post-training-alignment|area:search-deep-research|area:multimodal-vlm-gui"
+        data-signal_tags="signal:paper"
+        data-credibility="medium"
+      >
+        <div class="meta">2026-06-20 · arXiv cs.AI · paper · medium</div>
+        <h2><a href="https://arxiv.org/abs/2606.19469">Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023</a></h2>
+        <p>arXiv:2606.19469v1 Announce Type: new Abstract: Undergraduate computer science is governed by international curricular guidelines revised about once a decade, yet programs lack a reliable, reproducible way to measure ho…</p>
+        <p>
+<span class="tag">area:post-training-alignment</span><span class="tag">area:search-deep-research</span><span class="tag">area:multimodal-vlm-gui</span>            <span class="tag warn">signal:paper</span>
+        </p>
+        <div class="muted">Routes: research</div>
+      </article>
+      <article
+        class="card"
+        id="796151af8f21"
+        data-filter-item
+        data-date="2026-06-20"
+        data-source_type="paper_index"
+        data-area_tags="area:reasoning-verifier-reward|area:agent-tool-use-computer-use"
+        data-signal_tags="signal:paper"
+        data-credibility="medium"
+      >
+        <div class="meta">2026-06-20 · arXiv cs.AI · paper · medium</div>
+        <h2><a href="https://arxiv.org/abs/2606.19494">Hidden Anchors in Multi-Agent LLM Deliberation</a></h2>
+        <p>arXiv:2606.19494v1 Announce Type: new Abstract: Multi-agent LLM deliberation, where agents exchange and revise answers over several rounds, is increasingly used to improve reasoning and accuracy, yet how and why it work…</p>
+        <p>
+<span class="tag">area:reasoning-verifier-reward</span><span class="tag">area:agent-tool-use-computer-use</span>            <span class="tag warn">signal:paper</span>
+        </p>
+        <div class="muted">Routes: research</div>
+      </article>
+      <article
+        class="card"
+        id="58a0ea71033b"
+        data-filter-item
+        data-date="2026-06-20"
+        data-source_type="paper_index"
+        data-area_tags=""
+        data-signal_tags="signal:paper"
+        data-credibility="medium"
+      >
+        <div class="meta">2026-06-20 · arXiv cs.AI · paper · medium</div>
+        <h2><a href="https://arxiv.org/abs/2606.19475">Diffusion Language Models: An Experimental Analysis</a></h2>
+        <p>arXiv:2606.19475v1 Announce Type: new Abstract: Large Language Models (LLMs) have revolutionized language modeling through autoregressive generation, enabling strong performance across a wide range of tasks. Recently, D…</p>
+        <p>
+            <span class="tag warn">signal:paper</span>
+        </p>
+        <div class="muted">Routes: research</div>
+      </article>
+      <article
+        class="card"
+        id="37c686459a4b"
+        data-filter-item
+        data-date="2026-06-20"
+        data-source_type="paper_index"
+        data-area_tags="area:agent-tool-use-computer-use"
+        data-signal_tags="signal:paper"
+        data-credibility="medium"
+      >
+        <div class="meta">2026-06-20 · arXiv cs.AI · paper · medium</div>
+        <h2><a href="https://arxiv.org/abs/2606.19464">Deontic Policies for Runtime Governance of Agentic AI Systems</a></h2>
+        <p>arXiv:2606.19464v1 Announce Type: new Abstract: Autonomous agentic AI systems driven by Large Language Models (LLMs) introduce a new class of security, privacy, and compliance challenges: an agent that can invoke tools,…</p>
+        <p>
+<span class="tag">area:agent-tool-use-computer-use</span>            <span class="tag warn">signal:paper</span>
+        </p>
+        <div class="muted">Routes: research</div>
+      </article>
+      <article
+        class="card"
+        id="354c62a5ba53"
+        data-filter-item
+        data-date="2026-06-17"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-17 · Anthropic Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/anthropic/jobs/5221910008">Account Executive, Beneficial Deployments (French Speaking)</a></h2>
+        <p>London, UK</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="ea0396bbf144"
+        data-filter-item
+        data-date="2026-06-16"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-16 · xAI Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/xai/jobs/5090180007">AI Tutor - Chinese</a></h2>
+        <p>Remote</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="d24ce1cc905b"
+        data-filter-item
+        data-date="2026-06-16"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-16 · xAI Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/xai/jobs/5098930007">AI Tutor - Audio Editing</a></h2>
+        <p>Remote</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="cd193c2eee58"
+        data-filter-item
+        data-date="2026-06-16"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-16 · xAI Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/xai/jobs/5090171007">AI Tutor - Arabic</a></h2>
+        <p>Remote</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="717a2415da76"
+        data-filter-item
+        data-date="2026-06-16"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-16 · xAI Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/xai/jobs/4931312007">AI Healthcare and Administration Tutor</a></h2>
+        <p>Remote</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="5a6dba363364"
+        data-filter-item
+        data-date="2026-06-12"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-12 · Anthropic Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/anthropic/jobs/5222180008">Account Executive - ASEAN</a></h2>
+        <p>Sydney, Australia</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="1eefcb40f8d1"
+        data-filter-item
+        data-date="2026-06-08"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-08 · Anthropic Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/anthropic/jobs/4461450008">Account Executive, AI Native</a></h2>
+        <p>San Francisco, CA | New York City, NY</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+      <article
+        class="card"
+        id="70ebae3b6e76"
+        data-filter-item
+        data-date="2026-06-02"
+        data-source_type="hiring"
+        data-area_tags=""
+        data-signal_tags="signal:jd"
+        data-credibility="high"
+      >
+        <div class="meta">2026-06-02 · Anthropic Careers · job_description · high</div>
+        <h2><a href="https://job-boards.greenhouse.io/anthropic/jobs/5221914008">Account Executive, Beneficial Deployments (Spanish Speaking)</a></h2>
+        <p>London, UK</p>
+        <p>
+            <span class="tag warn">signal:jd</span>
+        </p>
+        <div class="muted">Routes: jobs</div>
+      </article>
+  </section>
+    <footer>Generated from JSONL/JSON evidence. Published pages show only records with <code>status=published</code>.</footer>
+  </div>
+  <script>
+    const controls = document.querySelectorAll("[data-filter-control]");
+    const items = document.querySelectorAll("[data-filter-item]");
+    function matches(item, key, value) {
+      if (!value) return true;
+      const raw = item.dataset[key] || "";
+      if (key === "date") return raw >= value;
+      return raw.split("|").includes(value) || raw === value;
+    }
+    function applyFilters() {
+      items.forEach((item) => {
+        const visible = Array.from(controls).every((control) => matches(item, control.dataset.filterControl, control.value));
+        item.classList.toggle("hidden", !visible);
+      });
+    }
+    controls.forEach((control) => control.addEventListener("input", applyFilters));
+  </script>
+</body>
+</html>

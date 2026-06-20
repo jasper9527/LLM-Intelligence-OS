@@ -1,0 +1,51 @@
+{
+  "source_id": "arxiv-cs-ai",
+  "collector_kind": "arxiv_rss",
+  "collected_at": "2026-06-20T10:01:56Z",
+  "items": [
+    {
+      "source_id": "arxiv-cs-ai",
+      "collector_kind": "arxiv_rss",
+      "ingestion_mode": "scheduled",
+      "title": "Deontic Policies for Runtime Governance of Agentic AI Systems",
+      "url": "https://arxiv.org/abs/2606.19464",
+      "published_at": "2026-06-20",
+      "summary": "arXiv:2606.19464v1 Announce Type: new Abstract: Autonomous agentic AI systems driven by Large Language Models (LLMs) introduce a new class of security, privacy, and compliance challenges: an agent that can invoke tools,…",
+      "content_type": "paper",
+      "authors": []
+    },
+    {
+      "source_id": "arxiv-cs-ai",
+      "collector_kind": "arxiv_rss",
+      "ingestion_mode": "scheduled",
+      "title": "Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023",
+      "url": "https://arxiv.org/abs/2606.19469",
+      "published_at": "2026-06-20",
+      "summary": "arXiv:2606.19469v1 Announce Type: new Abstract: Undergraduate computer science is governed by international curricular guidelines revised about once a decade, yet programs lack a reliable, reproducible way to measure ho…",
+      "content_type": "paper",
+      "authors": []
+    },
+    {
+      "source_id": "arxiv-cs-ai",
+      "collector_kind": "arxiv_rss",
+      "ingestion_mode": "scheduled",
+      "title": "Diffusion Language Models: An Experimental Analysis",
+      "url": "https://arxiv.org/abs/2606.19475",
+      "published_at": "2026-06-20",
+      "summary": "arXiv:2606.19475v1 Announce Type: new Abstract: Large Language Models (LLMs) have revolutionized language modeling through autoregressive generation, enabling strong performance across a wide range of tasks. Recently, D…",
+      "content_type": "paper",
+      "authors": []
+    },
+    {
+      "source_id": "arxiv-cs-ai",
+      "collector_kind": "arxiv_rss",
+      "ingestion_mode": "scheduled",
+      "title": "Hidden Anchors in Multi-Agent LLM Deliberation",
+      "url": "https://arxiv.org/abs/2606.19494",
+      "published_at": "2026-06-20",
+      "summary": "arXiv:2606.19494v1 Announce Type: new Abstract: Multi-agent LLM deliberation, where agents exchange and revise answers over several rounds, is increasingly used to improve reasoning and accuracy, yet how and why it work…",
+      "content_type": "paper",
+      "authors": []
+    }
+  ]
+}

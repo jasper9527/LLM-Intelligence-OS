@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM Intelligence OS | LLM Intelligence OS</title>
+  <style>
+    :root{
+      --paper:#f7f0e3;
+      --ink:#1d2433;
+      --muted:#5f6779;
+      --border:#d8cdbb;
+      --card:#fffaf1;
+      --accent:#9f3f2e;
+      --accent-soft:#f1dfc0;
+      --success:#1d6b57;
+      --warn:#965e1f;
+      --danger:#9c2f2f;
+      --shadow:0 18px 45px rgba(29,36,51,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(159,63,46,.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(29,107,87,.08), transparent 24%),
+        linear-gradient(180deg, #fbf4e8 0%, var(--paper) 48%, #f4ecde 100%);
+      font-family:"Aptos","Segoe UI",sans-serif;
+      line-height:1.55;
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .shell{max-width:1200px;margin:0 auto;padding:24px}
+    .hero{
+      padding:36px 0 14px;
+      border-bottom:1px solid rgba(216,205,187,.9);
+      margin-bottom:22px;
+    }
+    .eyebrow{
+      margin:0 0 8px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:12px;
+    }
+    h1,h2,h3{
+      font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;
+      margin:0 0 10px;
+      letter-spacing:-.02em;
+    }
+    h1{font-size:42px;line-height:1.05}
+    h2{font-size:28px}
+    h3{font-size:18px}
+    .hero p{max-width:820px;margin:10px 0 0;color:var(--muted)}
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+    nav a{
+      padding:10px 14px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,250,241,.72);
+      color:var(--ink);
+      font-size:14px;
+    }
+    nav a.active{
+      background:var(--accent);
+      border-color:var(--accent);
+      color:#fff8f1;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:18px;
+      align-items:start;
+    }
+    .stack{display:grid;gap:18px}
+    .card{
+      background:rgba(255,250,241,.92);
+      border:1px solid rgba(216,205,187,.9);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+    .card.compact{padding:14px}
+    .card .meta{color:var(--muted);font-size:14px;margin-bottom:12px}
+    .muted{color:var(--muted)}
+    .lede{
+      font-size:18px;
+      color:var(--muted);
+      max-width:840px;
+      margin-bottom:18px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:4px 10px;
+      margin:0 6px 6px 0;
+      border:1px solid rgba(159,63,46,.2);
+      background:var(--accent-soft);
+      color:var(--ink);
+      font-size:12px;
+      line-height:1.2;
+    }
+    .tag.good{background:rgba(29,107,87,.12);border-color:rgba(29,107,87,.2)}
+    .tag.warn{background:rgba(150,94,31,.12);border-color:rgba(150,94,31,.2)}
+    .tag.bad{background:rgba(156,47,47,.12);border-color:rgba(156,47,47,.2)}
+    .kpi{
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.4);
+      border:1px solid rgba(216,205,187,.9);
+    }
+    .kpi strong{display:block;font-size:24px}
+    .filters{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .filters label{
+      display:grid;
+      gap:6px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    select,input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fffdf8;
+      color:var(--ink);
+    }
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .list{
+      display:grid;
+      gap:16px;
+    }
+    .split{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:18px;
+    }
+    .inline-list{
+      margin:0;
+      padding-left:18px;
+    }
+    .callout{
+      border-left:4px solid var(--accent);
+      padding:12px 14px;
+      background:rgba(159,63,46,.08);
+      border-radius:0 12px 12px 0;
+      margin:12px 0;
+    }
+    .hidden{display:none!important}
+    footer{
+      padding:24px 0 36px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    @media (max-width: 900px){
+      .split{grid-template-columns:1fr}
+      h1{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <p class="eyebrow">Codex-native intelligence system</p>
+      <h1>LLM Intelligence OS</h1>
+      <p>Weekly navigation, breakout signals, fresh updates, and the current read queue.</p>
+      <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="events.html" class="">Events</a>
+        <a href="jobs.html" class="">Jobs</a>
+        <a href="research.html" class="">Research</a>
+        <a href="landscape.html" class="">Landscape</a>
+        <a href="sources.html" class="">Sources</a>
+        <a href="reports.html" class="">Reports</a>
+        <a href="drafts.html" class="">Drafts</a>
+      </nav>
+    </header>
+  <section class="grid">
+    <article class="kpi"><span class="muted">Published events</span><strong>12</strong></article>
+    <article class="kpi"><span class="muted">Research records</span><strong>4</strong></article>
+    <article class="kpi"><span class="muted">Job signals</span><strong>8</strong></article>
+    <article class="kpi"><span class="muted">Landscape drafts</span><strong>5</strong></article>
+  </section>
+
+  <div class="split" style="margin-top:18px">
+    <section class="stack">
+      <article class="card">
+        <div class="section-title">
+          <h2>This Week's Important Signals</h2>
+          <a href="reports.html">Open reports</a>
+        </div>
+          <div class="list">
+              <article>
+                <h3><a href="research.html#6f132cab559c">Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023</a></h3>
+                <p class="muted">arXiv:2606.19469v1 Announce Type: new Abstract: Undergraduate computer science is governed by international curricular guidelines revised about once a decade, yet programs lack a reliable, reproducible way to measure ho…</p>
+              </article>
+              <article>
+                <h3><a href="research.html#796151af8f21">Hidden Anchors in Multi-Agent LLM Deliberation</a></h3>
+                <p class="muted">arXiv:2606.19494v1 Announce Type: new Abstract: Multi-agent LLM deliberation, where agents exchange and revise answers over several rounds, is increasingly used to improve reasoning and accuracy, yet how and why it work…</p>
+              </article>
+              <article>
+                <h3><a href="research.html#58a0ea71033b">Diffusion Language Models: An Experimental Analysis</a></h3>
+                <p class="muted">arXiv:2606.19475v1 Announce Type: new Abstract: Large Language Models (LLMs) have revolutionized language modeling through autoregressive generation, enabling strong performance across a wide range of tasks. Recently, D…</p>
+              </article>
+              <article>
+                <h3><a href="research.html#37c686459a4b">Deontic Policies for Runtime Governance of Agentic AI Systems</a></h3>
+                <p class="muted">arXiv:2606.19464v1 Announce Type: new Abstract: Autonomous agentic AI systems driven by Large Language Models (LLMs) introduce a new class of security, privacy, and compliance challenges: an agent that can invoke tools,…</p>
+              </article>
+              <article>
+                <h3><a href="jobs.html#354c62a5ba53">Account Executive, Beneficial Deployments (French Speaking)</a></h3>
+                <p class="muted">London, UK</p>
+              </article>
+          </div>
+      </article>
+
+      <article class="card">
+        <div class="section-title">
+          <h2>Latest Weekly Brief</h2>
+          <span class="muted">2026-06-14 to 2026-06-20</span>
+        </div>
+        <p class="callout">Weekly Brief stays short. It points you toward module pages instead of replacing them.</p>
+        <div class="grid">
+          <div>
+            <h3>Research changes</h3>
+            <ul class="inline-list">
+                <li><a href="research.html#6f132cab559c">Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023</a></li>
+                <li><a href="research.html#796151af8f21">Hidden Anchors in Multi-Agent LLM Deliberation</a></li>
+                <li><a href="research.html#58a0ea71033b">Diffusion Language Models: An Experimental Analysis</a></li>
+                <li><a href="research.html#37c686459a4b">Deontic Policies for Runtime Governance of Agentic AI Systems</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Job changes</h3>
+            <ul class="inline-list">
+                <li><a href="jobs.html#354c62a5ba53">Account Executive, Beneficial Deployments (French Speaking)</a></li>
+                <li><a href="jobs.html#ea0396bbf144">AI Tutor - Chinese</a></li>
+                <li><a href="jobs.html#d24ce1cc905b">AI Tutor - Audio Editing</a></li>
+                <li><a href="jobs.html#cd193c2eee58">AI Tutor - Arabic</a></li>
+                <li><a href="jobs.html#717a2415da76">AI Healthcare and Administration Tutor</a></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="stack">
+      <article class="card compact">
+        <h2>Recent Updates</h2>
+        <ul class="inline-list">
+            <li><a href="events.html#6f132cab559c">2026-06-20 · Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023</a></li>
+            <li><a href="events.html#796151af8f21">2026-06-20 · Hidden Anchors in Multi-Agent LLM Deliberation</a></li>
+            <li><a href="events.html#58a0ea71033b">2026-06-20 · Diffusion Language Models: An Experimental Analysis</a></li>
+            <li><a href="events.html#37c686459a4b">2026-06-20 · Deontic Policies for Runtime Governance of Agentic AI Systems</a></li>
+            <li><a href="events.html#354c62a5ba53">2026-06-17 · Account Executive, Beneficial Deployments (French Speaking)</a></li>
+            <li><a href="events.html#ea0396bbf144">2026-06-16 · AI Tutor - Chinese</a></li>
+        </ul>
+      </article>
+
+      <article class="card compact">
+        <h2>Breakout Signals</h2>
+          <p class="muted">No breakout-tagged events yet.</p>
+      </article>
+
+      <article class="card compact">
+        <h2>Read Queue</h2>
+        <ul class="inline-list">
+            <li><a href="events.html#1eefcb40f8d1">Account Executive, AI Native</a></li>
+            <li><a href="events.html#6f132cab559c">Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023</a></li>
+            <li><a href="events.html#796151af8f21">Hidden Anchors in Multi-Agent LLM Deliberation</a></li>
+            <li><a href="events.html#58a0ea71033b">Diffusion Language Models: An Experimental Analysis</a></li>
+            <li><a href="events.html#37c686459a4b">Deontic Policies for Runtime Governance of Agentic AI Systems</a></li>
+            <li><a href="events.html#354c62a5ba53">Account Executive, Beneficial Deployments (French Speaking)</a></li>
+            <li><a href="events.html#ea0396bbf144">AI Tutor - Chinese</a></li>
+            <li><a href="events.html#d24ce1cc905b">AI Tutor - Audio Editing</a></li>
+        </ul>
+      </article>
+    </section>
+  </div>
+    <footer>Generated from JSONL/JSON evidence. Published pages show only records with <code>status=published</code>.</footer>
+  </div>
+</body>
+</html>

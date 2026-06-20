@@ -1,0 +1,16 @@
+{
+  "target": "codex-preview-adapter",
+  "generated_at": "2026-06-20T10:02:36Z",
+  "entrypoint": "index.html",
+  "pages": [
+    "drafts.html",
+    "events.html",
+    "index.html",
+    "jobs.html",
+    "landscape.html",
+    "reports.html",
+    "research.html",
+    "sources.html"
+  ],
+  "note": "This adapter isolates deployment metadata for Codex static preview."
+}

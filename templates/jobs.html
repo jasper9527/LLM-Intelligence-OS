@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% set page_description = "Hiring signals split into role species, positive demand, red flags, and direct links back to canonical events." %}
+{% block content %}
+  <p class="lede">Every job card comes from a published event. This page is for pattern reading, not raw capture.</p>
+  <section class="list">
+    {% for item in jobs %}
+      <article class="card" id="{{ item.job_id }}">
+        <div class="meta">{{ item.date }} · {{ item.company }}{% if item.team %} / {{ item.team }}{% endif %} · {{ item.location or 'location unspecified' }}</div>
+        <h2><a href="{{ item.url }}">{{ item.title }}</a></h2>
+        <p>{{ item.market_value_summary }}</p>
+        <p>
+          <span class="tag good">{{ item.job_species }}</span>
+          <span class="tag">{{ item.credibility }}</span>
+          {% for keyword in item.common_keywords[:5] %}<span class="tag">{{ keyword }}</span>{% endfor %}
+        </p>
+        <div class="grid">
+          <div>
+            <h3>Positive signals</h3>
+            <ul class="inline-list">
+              {% for signal in item.positive_signals %}
+                <li>{{ signal }}</li>
+              {% else %}
+                <li class="muted">No explicit positive signals extracted yet.</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h3>Red flags</h3>
+            <ul class="inline-list">
+              {% for flag in item.red_flags %}
+                <li>{{ flag }}</li>
+              {% else %}
+                <li class="muted">No red flags extracted.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:12px">
+          Canonical event: <a href="events.html#{{ item.event_id }}">{{ item.event_id }}</a>
+        </div>
+      </article>
+    {% else %}
+      <article class="card"><p class="muted">No published job signals yet.</p></article>
+    {% endfor %}
+  </section>
+{% endblock %}

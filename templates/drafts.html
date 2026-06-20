@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% set page_description = "Internal operations surface for reviewing draft events, candidate tags, pending landscape updates, and publish recommendations." %}
+{% block content %}
+  <section class="grid">
+    <article class="kpi"><span class="muted">Draft events</span><strong>{{ review_summary.draft_count }}</strong></article>
+    <article class="kpi"><span class="muted">Candidate tags</span><strong>{{ candidate_tags|length }}</strong></article>
+    <article class="kpi"><span class="muted">Recommended publish</span><strong>{{ review_summary.recommended_publish_ids|length }}</strong></article>
+    <article class="kpi"><span class="muted">Landscape drafts</span><strong>{{ landscape_drafts|length }}</strong></article>
+  </section>
+
+  <div class="callout" style="margin-top:18px">
+    Review here, then publish from the CLI with <code>python scripts/publish.py --ids EVENT_ID ...</code> or <code>python scripts/publish.py --all-recommended</code>.
+  </div>
+
+  <div class="split">
+    <section class="stack">
+      <article class="card">
+        <div class="section-title">
+          <h2>Draft Events</h2>
+          <span class="muted">Newest first</span>
+        </div>
+        <div class="list">
+          {% for event in draft_events %}
+            <article class="card compact" id="{{ event.id }}">
+              <div class="meta">{{ event.date }} · {{ event.source }} · {{ event.content_type }} · {{ event.credibility }}</div>
+              <h3><a href="{{ event.url }}">{{ event.title }}</a></h3>
+              <p>{{ event.short_summary }}</p>
+              <p>
+                {% if event.id in review_summary.recommended_publish_ids %}
+                  <span class="tag good">recommended</span>
+                {% endif %}
+                {% for tag in event.area_tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+                {% for tag in event.signal_tags %}<span class="tag warn">{{ tag }}</span>{% endfor %}
+              </p>
+            </article>
+          {% else %}
+            <p class="muted">No draft events are waiting for review.</p>
+          {% endfor %}
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Pending Landscape Drafts</h2>
+        <div class="list">
+          {% for draft in landscape_drafts %}
+            <article class="card compact">
+              <h3>{{ draft.name }}</h3>
+              <p class="muted">{{ draft.current_state }}</p>
+              <p><span class="tag good">watch: {{ draft.watch_level }}</span></p>
+              <div class="muted">Backed by events: {{ draft.event_ids|join(', ') }}</div>
+            </article>
+          {% else %}
+            <p class="muted">No pending landscape drafts yet.</p>
+          {% endfor %}
+        </div>
+      </article>
+    </section>
+
+    <aside class="stack">
+      <article class="card compact">
+        <h2>Candidate Tags</h2>
+        <ul class="inline-list">
+          {% for item in candidate_tags %}
+            <li>{{ item.family }} · {{ item.tag }} · {{ item.example_title }}</li>
+          {% else %}
+            <li class="muted">No candidate tags waiting for taxonomy review.</li>
+          {% endfor %}
+        </ul>
+      </article>
+
+      <article class="card compact">
+        <h2>Read Queue</h2>
+        <ul class="inline-list">
+          {% for item in read_queue %}
+            <li><a href="events.html#{{ item.id }}">{{ item.title }}</a></li>
+          {% else %}
+            <li class="muted">No current read queue.</li>
+          {% endfor %}
+        </ul>
+      </article>
+    </aside>
+  </div>
+{% endblock %}

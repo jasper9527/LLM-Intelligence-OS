@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% set page_description = "Weekly navigation and monthly synthesis archives. Reports summarize; modules hold the depth." %}
+{% block content %}
+  <div class="split">
+    <section class="stack">
+      <article class="card">
+        <div class="section-title">
+          <h2>Latest Weekly Brief</h2>
+          <span class="muted">{{ latest_weekly.report_id }}</span>
+        </div>
+        <div class="grid">
+          <div>
+            <h3>Top five signals</h3>
+            <ul class="inline-list">
+              {% for item in latest_weekly.highlights %}
+                <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+              {% else %}
+                <li class="muted">No highlights yet.</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h3>Open questions</h3>
+            <ul class="inline-list">
+              {% for item in latest_weekly.open_questions %}
+                <li>{{ item }}</li>
+              {% else %}
+                <li class="muted">No open questions yet.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="section-title">
+          <h2>Latest Monthly Review</h2>
+          <span class="muted">{{ latest_monthly.report_id }}</span>
+        </div>
+        <div class="grid">
+          <div>
+            <h3>Top changes</h3>
+            <ul class="inline-list">
+              {% for item in latest_monthly.top_changes %}
+                <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+              {% else %}
+                <li class="muted">No monthly changes yet.</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h3>Landscape drafts referenced</h3>
+            <ul class="inline-list">
+              {% for item in latest_monthly.landscape_drafts %}
+                <li>{{ item.name }} · {{ item.watch_level }}</li>
+              {% else %}
+                <li class="muted">No landscape drafts yet.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <aside class="stack">
+      <article class="card compact">
+        <h2>Weekly Archive</h2>
+        <ul class="inline-list">
+          {% for report in weekly_reports %}
+            <li>{{ report.report_id }} · {{ report.highlights|length }} highlights</li>
+          {% else %}
+            <li class="muted">No weekly archive yet.</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card compact">
+        <h2>Monthly Archive</h2>
+        <ul class="inline-list">
+          {% for report in monthly_reports %}
+            <li>{{ report.report_id }} · {{ report.top_changes|length }} tracked changes</li>
+          {% else %}
+            <li class="muted">No monthly archive yet.</li>
+          {% endfor %}
+        </ul>
+      </article>
+    </aside>
+  </div>
+{% endblock %}

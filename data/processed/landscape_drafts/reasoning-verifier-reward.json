@@ -1,0 +1,30 @@
+{
+  "name": "Reasoning / Verifier / Reward",
+  "definition": "Initial placeholder card for v1.",
+  "scope": [],
+  "not_scope": [],
+  "current_state": "Recent published evidence count: 1.",
+  "key_methods": [],
+  "key_tasks": [
+    "reasoning"
+  ],
+  "key_benchmarks": [],
+  "representative_papers": [
+    "Hidden Anchors in Multi-Agent LLM Deliberation"
+  ],
+  "representative_companies": [],
+  "job_relevance": "Track hiring signal links here.",
+  "risks": [],
+  "controversies": [],
+  "open_questions": [],
+  "recent_developments": [
+    "Hidden Anchors in Multi-Agent LLM Deliberation"
+  ],
+  "negative_signals": [],
+  "watch_level": "medium",
+  "last_updated": "2026-06-20",
+  "status": "draft",
+  "event_ids": [
+    "796151af8f21"
+  ]
+}

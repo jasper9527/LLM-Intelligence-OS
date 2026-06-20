@@ -1,0 +1,67 @@
+{
+  "source_id": "xai-careers",
+  "collector_kind": "greenhouse_board",
+  "collected_at": "2026-06-20T10:01:59Z",
+  "items": [
+    {
+      "source_id": "xai-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "AI Healthcare and Administration Tutor",
+      "url": "https://job-boards.greenhouse.io/xai/jobs/4931312007",
+      "published_at": "2026-06-16",
+      "summary": "Remote",
+      "content_type": "job_description",
+      "company": "xAI",
+      "team": "",
+      "location": "Remote",
+      "job_species": "general",
+      "common_keywords": []
+    },
+    {
+      "source_id": "xai-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "AI Tutor - Arabic",
+      "url": "https://job-boards.greenhouse.io/xai/jobs/5090171007",
+      "published_at": "2026-06-16",
+      "summary": "Remote",
+      "content_type": "job_description",
+      "company": "xAI",
+      "team": "",
+      "location": "Remote",
+      "job_species": "general",
+      "common_keywords": []
+    },
+    {
+      "source_id": "xai-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "AI Tutor - Audio Editing",
+      "url": "https://job-boards.greenhouse.io/xai/jobs/5098930007",
+      "published_at": "2026-06-16",
+      "summary": "Remote",
+      "content_type": "job_description",
+      "company": "xAI",
+      "team": "",
+      "location": "Remote",
+      "job_species": "general",
+      "common_keywords": []
+    },
+    {
+      "source_id": "xai-careers",
+      "collector_kind": "greenhouse_board",
+      "ingestion_mode": "scheduled",
+      "title": "AI Tutor - Chinese",
+      "url": "https://job-boards.greenhouse.io/xai/jobs/5090180007",
+      "published_at": "2026-06-16",
+      "summary": "Remote",
+      "content_type": "job_description",
+      "company": "xAI",
+      "team": "",
+      "location": "Remote",
+      "job_species": "general",
+      "common_keywords": []
+    }
+  ]
+}

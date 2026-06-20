@@ -1,0 +1,46 @@
+tasks:
+  daily_collect:
+    cadence: 1-2 times daily
+    entrypoint: scripts/collect.py
+    outputs:
+      - data/raw/snapshots/
+      - data/events.jsonl
+      - data/processed/review_summary.json
+  review:
+    cadence: on_demand
+    entrypoint: scripts/review.py
+    outputs:
+      - data/processed/review_summary.json
+      - site/drafts.html
+  publish:
+    cadence: on_demand
+    entrypoint: scripts/publish.py
+    outputs:
+      - data/papers.jsonl
+      - data/jobs.jsonl
+      - data/sources.jsonl
+      - data/processed/landscape_drafts/
+  radar_update:
+    cadence: every 2-3 days
+    entrypoints:
+      - scripts/update_jobs.py
+      - scripts/update_research.py
+      - scripts/update_landscape.py
+  weekly_brief:
+    cadence: weekly
+    entrypoint: scripts/generate_weekly.py
+    output: data/weekly/
+  monthly_review:
+    cadence: monthly
+    entrypoint: scripts/generate_monthly.py
+    output: data/monthly/
+  build_site:
+    cadence: after_publish
+    entrypoint: scripts/build_site.py
+    outputs:
+      - site/
+  deploy:
+    cadence: after_build
+    entrypoint: scripts/deploy.py
+    outputs:
+      - site/deploy-manifest.json

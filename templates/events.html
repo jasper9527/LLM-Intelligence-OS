@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% set page_description = "Canonical event stream with published-only filtering by source type, area, signal, credibility, and date." %}
+{% block content %}
+  <p class="lede">Everything enters here first. Research, hiring, weekly synthesis, and landscape work all derive from this stream.</p>
+  <section class="card">
+    <div class="section-title">
+      <h2>Filters</h2>
+      <span class="muted">{{ events|length }} published events</span>
+    </div>
+    <div class="filters">
+      <label>Date
+        <input id="filter-date" data-filter-control="date" type="date">
+      </label>
+      <label>Source type
+        <select id="filter-source" data-filter-control="source_type">
+          <option value="">All</option>
+          {% for value in event_filter_options.source_types %}
+            <option value="{{ value }}">{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Area tag
+        <select id="filter-area" data-filter-control="area_tags">
+          <option value="">All</option>
+          {% for value in event_filter_options.area_tags %}
+            <option value="{{ value }}">{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Signal tag
+        <select id="filter-signal" data-filter-control="signal_tags">
+          <option value="">All</option>
+          {% for value in event_filter_options.signal_tags %}
+            <option value="{{ value }}">{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Credibility
+        <select id="filter-credibility" data-filter-control="credibility">
+          <option value="">All</option>
+          {% for value in event_filter_options.credibility %}
+            <option value="{{ value }}">{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="list" id="event-list">
+    {% for event in events %}
+      <article
+        class="card"
+        id="{{ event.id }}"
+        data-filter-item
+        data-date="{{ event.date }}"
+        data-source_type="{{ event.source_type }}"
+        data-area_tags="{{ event.area_tags|join('|') }}"
+        data-signal_tags="{{ event.signal_tags|join('|') }}"
+        data-credibility="{{ event.credibility }}"
+      >
+        <div class="meta">{{ event.date }} · {{ event.source }} · {{ event.content_type }} · {{ event.credibility }}</div>
+        <h2><a href="{{ event.url }}">{{ event.title }}</a></h2>
+        <p>{{ event.short_summary }}</p>
+        <p>
+          {% for tag in event.area_tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+          {% for tag in event.signal_tags %}
+            <span class="tag {% if 'negative' in tag or 'red-flag' in tag %}bad{% elif 'breakout' in tag %}good{% else %}warn{% endif %}">{{ tag }}</span>
+          {% endfor %}
+        </p>
+        <div class="muted">Routes: {{ event.routed_to|join(', ') if event.routed_to else 'event-only' }}</div>
+      </article>
+    {% else %}
+      <article class="card"><p class="muted">No published events yet.</p></article>
+    {% endfor %}
+  </section>
+{% endblock %}
+{% block scripts %}
+  <script>
+    const controls = document.querySelectorAll("[data-filter-control]");
+    const items = document.querySelectorAll("[data-filter-item]");
+    function matches(item, key, value) {
+      if (!value) return true;
+      const raw = item.dataset[key] || "";
+      if (key === "date") return raw >= value;
+      return raw.split("|").includes(value) || raw === value;
+    }
+    function applyFilters() {
+      items.forEach((item) => {
+        const visible = Array.from(controls).every((control) => matches(item, control.dataset.filterControl, control.value));
+        item.classList.toggle("hidden", !visible);
+      });
+    }
+    controls.forEach((control) => control.addEventListener("input", applyFilters));
+  </script>
+{% endblock %}

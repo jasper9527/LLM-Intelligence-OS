@@ -1,0 +1,30 @@
+{
+  "name": "Multimodal / VLM / GUI",
+  "definition": "Initial placeholder card for v1.",
+  "scope": [],
+  "not_scope": [],
+  "current_state": "Recent published evidence count: 1.",
+  "key_methods": [
+    "rag"
+  ],
+  "key_tasks": [],
+  "key_benchmarks": [],
+  "representative_papers": [
+    "Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023"
+  ],
+  "representative_companies": [],
+  "job_relevance": "Track hiring signal links here.",
+  "risks": [],
+  "controversies": [],
+  "open_questions": [],
+  "recent_developments": [
+    "Measuring Curriculum Alignment across Topical Coverage, Competency, and Cognitive Depth: A Longitudinal Framework Applied to CS2013 and CS2023"
+  ],
+  "negative_signals": [],
+  "watch_level": "medium",
+  "last_updated": "2026-06-20",
+  "status": "draft",
+  "event_ids": [
+    "6f132cab559c"
+  ]
+}

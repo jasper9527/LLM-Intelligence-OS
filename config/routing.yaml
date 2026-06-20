@@ -1,0 +1,27 @@
+routes:
+  research:
+    content_types:
+      - paper
+      - technical_report
+      - benchmark
+      - repository
+    output: data/papers.jsonl
+  jobs:
+    content_types:
+      - job_description
+      - hiring_post
+      - team_announcement
+    output: data/jobs.jsonl
+  landscape:
+    content_types: []
+    triggers:
+      - repeated_signal
+      - controversy
+      - breakout
+      - negative_signal
+      - field_shift
+    output: data/processed/landscape_drafts/
+  sources:
+    content_types:
+      - source_observation
+    output: data/sources.jsonl

@@ -1,0 +1,38 @@
+tag_families:
+  entity_tags: []
+  area_tags:
+    - area:post-training-alignment
+    - area:reasoning-verifier-reward
+    - area:agent-tool-use-computer-use
+    - area:search-deep-research
+    - area:multimodal-vlm-gui
+    - area:eval-judge-benchmark
+  method_tags:
+    - method:rlhf
+    - method:dpo
+    - method:verifier
+    - method:reward-model
+    - method:tool-use
+    - method:rag
+    - method:gui-agent
+    - method:judge-model
+  task_tags:
+    - task:reasoning
+    - task:research-assistant
+    - task:browser-use
+    - task:multimodal-understanding
+    - task:evaluation
+  job_tags:
+    - job:post-training-researcher
+    - job:evals-engineer
+    - job:agent-systems-engineer
+    - job:multimodal-researcher
+  signal_tags:
+    - signal:negative
+    - signal:breakout
+    - signal:red-flag
+    - signal:paper
+    - signal:jd
+    - signal:benchmark
+    - signal:repo
+    - signal:note

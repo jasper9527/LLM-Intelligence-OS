@@ -1,0 +1,33 @@
+{
+  "name": "Agent / Tool-use / Computer-use",
+  "definition": "Initial placeholder card for v1.",
+  "scope": [],
+  "not_scope": [],
+  "current_state": "Recent published evidence count: 2.",
+  "key_methods": [],
+  "key_tasks": [
+    "reasoning"
+  ],
+  "key_benchmarks": [],
+  "representative_papers": [
+    "Hidden Anchors in Multi-Agent LLM Deliberation",
+    "Deontic Policies for Runtime Governance of Agentic AI Systems"
+  ],
+  "representative_companies": [],
+  "job_relevance": "Track hiring signal links here.",
+  "risks": [],
+  "controversies": [],
+  "open_questions": [],
+  "recent_developments": [
+    "Hidden Anchors in Multi-Agent LLM Deliberation",
+    "Deontic Policies for Runtime Governance of Agentic AI Systems"
+  ],
+  "negative_signals": [],
+  "watch_level": "medium",
+  "last_updated": "2026-06-20",
+  "status": "draft",
+  "event_ids": [
+    "796151af8f21",
+    "37c686459a4b"
+  ]
+}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% set page_description = "Source quality, coverage, noise, bias, and what each feed is actually useful for." %}
+{% block content %}
+  <section class="list">
+    {% for source in sources %}
+      <article class="card" id="{{ source.source_id }}">
+        <div class="meta">{{ source.type }} · {{ source.update_frequency }} · last checked {{ source.last_checked }}</div>
+        <h2><a href="{{ source.url }}">{{ source.name }}</a></h2>
+        <p>{{ source.coverage }}</p>
+        <p>
+          <span class="tag good">signal quality: {{ source.signal_quality }}</span>
+          <span class="tag warn">noise: {{ source.noise_level }}</span>
+        </p>
+        <div class="grid">
+          <div>
+            <h3>Best for</h3>
+            <p>{{ source.best_for }}</p>
+          </div>
+          <div>
+            <h3>Not good for</h3>
+            <p>{{ source.not_good_for }}</p>
+          </div>
+        </div>
+        <div class="callout">Bias: {{ source.bias }}</div>
+        <p class="muted">{{ source.notes }}</p>
+      </article>
+    {% else %}
+      <article class="card"><p class="muted">No source records yet.</p></article>
+    {% endfor %}
+  </section>
+{% endblock %}

@@ -1,0 +1,77 @@
+sources:
+  - source_id: arxiv-cs-ai
+    name: arXiv cs.AI
+    enabled: true
+    source_type: paper_index
+    collector_kind: arxiv_rss
+    url: https://export.arxiv.org/rss/cs.AI
+    cadence: daily
+    credibility_default: medium
+    coverage: AI research preprints with strong frontier recall.
+    noise_level: medium
+    bias: preprint-first, fast-moving, weak on downstream validation
+    best_for: early detection of research-frontier motion
+    not_good_for: deciding whether a direction is already durable
+    entity_defaults:
+      - arXiv
+    route_defaults:
+      content_type: paper
+      signal_tags:
+        - signal:paper
+  - source_id: anthropic-careers
+    name: Anthropic Careers
+    enabled: true
+    source_type: hiring
+    collector_kind: greenhouse_board
+    url: https://job-boards.greenhouse.io/anthropic
+    board_token: anthropic
+    company: Anthropic
+    cadence: every_2_3_days
+    credibility_default: high
+    coverage: Hiring signals for frontier model research and engineering roles.
+    noise_level: low
+    bias: company-specific and recruiting-driven
+    best_for: role definitions, team demand, hiring velocity
+    not_good_for: cross-market salary inference
+    entity_defaults:
+      - Anthropic
+    route_defaults:
+      content_type: job_description
+      signal_tags:
+        - signal:jd
+  - source_id: xai-careers
+    name: xAI Careers
+    enabled: true
+    source_type: hiring
+    collector_kind: greenhouse_board
+    url: https://job-boards.greenhouse.io/xai
+    board_token: xai
+    company: xAI
+    cadence: every_2_3_days
+    credibility_default: high
+    coverage: Hiring signals for model, infra, and agent-system roles.
+    noise_level: low
+    bias: company-specific and recruiting-driven
+    best_for: seeing demand shifts around productized frontier work
+    not_good_for: broad labor-market calibration
+    entity_defaults:
+      - xAI
+    route_defaults:
+      content_type: job_description
+      signal_tags:
+        - signal:jd
+  - source_id: manual-submission
+    name: Manual Submission Queue
+    enabled: false
+    source_type: manual
+    collector_kind: manual_queue
+    url: manual://raw/manual_submissions.jsonl
+    cadence: on_demand
+    credibility_default: medium
+    coverage: User-submitted candidate evidence, links, and notes.
+    noise_level: medium
+    bias: depends on operator selection
+    best_for: targeted imports and migration staging
+    not_good_for: unattended market coverage
+    route_defaults:
+      content_type: note
