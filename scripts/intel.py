@@ -1119,6 +1119,29 @@ def monthly_reports() -> list[dict[str, Any]]:
     return [load_json(path, {}) for path in sorted(MONTHLY_DIR.glob("*.json"), reverse=True)]
 
 
+
+def load_codex_candidates() -> list[dict[str, Any]]:
+    candidate_dir = DATA_DIR / "codex_discovery" / "candidates"
+    records: list[dict[str, Any]] = []
+    for path in sorted(candidate_dir.glob("*.jsonl"), reverse=True):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            record["candidate_file"] = str(path.relative_to(ROOT))
+            records.append(record)
+    return records
+
+
+def load_codex_runs() -> list[dict[str, Any]]:
+    runs_dir = DATA_DIR / "codex_discovery" / "runs"
+    runs: list[dict[str, Any]] = []
+    for path in sorted(runs_dir.glob("*.json"), reverse=True):
+        run = load_json(path, {})
+        run["run_file"] = str(path.relative_to(ROOT))
+        runs.append(run)
+    return runs
+
 def page_counts() -> dict[str, int]:
     return {
         "events": len(load_events()),
@@ -1170,6 +1193,8 @@ def build_context() -> dict[str, Any]:
         "breakout_events": breakout_events,
         "read_queue": read_queue,
         "review_summary": review_summary,
+        "codex_candidates": load_codex_candidates(),
+        "codex_runs": load_codex_runs(),
         "event_filter_options": {
             "source_types": sorted({item.get("source_type", "") for item in published_events if item.get("source_type")}),
             "area_tags": sorted({tag for item in published_events for tag in normalize_list(item.get("area_tags"))}),
@@ -1198,6 +1223,7 @@ def build_site() -> list[Path]:
         ("sources.html", "sources.html", "Source Map"),
         ("reports.html", "reports.html", "Reports"),
         ("drafts.html", "drafts.html", "Draft Review"),
+        ("discovery.html", "discovery.html", "Codex Discovery"),
     ):
         template = environment.get_template(template_name)
         output = template.render(title=title, **context)
