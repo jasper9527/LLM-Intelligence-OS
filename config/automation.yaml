@@ -1,7 +1,53 @@
 tasks:
-  daily_collect:
+  # Repository-side definition for a Codex Cloud scheduled task.
+  # A human still needs to create the schedule in the Codex UI and point it at this prompt.
+  codex_daily_discovery:
+    cloud_schedule_required: true
+    cadence: daily
+    recommended_cron: "0 1 * * *"
+    prompt: config/prompts/codex_daily_discovery.md
+    outputs:
+      - data/codex_discovery/candidates/
+      - data/codex_discovery/runs/
+    commands:
+      - python scripts/validate_codex_candidates.py
+      - python scripts/import_codex_candidates.py
+      - python scripts/review.py
+      - python scripts/build_site.py
+  codex_weekly_deep_discovery:
+    cloud_schedule_required: true
+    cadence: weekly_before_brief
+    recommended_cron: "0 2 * * 0"
+    prompt: config/prompts/codex_weekly_deep_discovery.md
+    outputs:
+      - data/codex_discovery/candidates/
+      - data/codex_discovery/runs/
+    commands:
+      - python scripts/validate_codex_candidates.py
+      - python scripts/import_codex_candidates.py
+      - python scripts/generate_weekly.py
+      - python scripts/build_site.py
+  codex_source_scout:
+    cloud_schedule_required: true
+    cadence: twice_monthly
+    recommended_cron: "0 3 1,15 * *"
+    prompt: config/prompts/codex_source_scout.md
+    outputs:
+      - data/codex_discovery/source_candidates/
+  codex_monthly_synthesis_candidate:
+    cloud_schedule_required: true
+    cadence: monthly_before_review
+    recommended_cron: "0 4 28 * *"
+    prompt: config/prompts/codex_monthly_synthesis_candidate.md
+    outputs:
+      - data/codex_discovery/landscape_update_candidates/
+    commands:
+      - python scripts/generate_monthly.py
+      - python scripts/build_site.py
+  scripted_stable_collector:
     cadence: 1-2 times daily
     entrypoint: scripts/collect.py
+    role: stable_source_supplement_not_primary_discovery
     outputs:
       - data/raw/snapshots/
       - data/events.jsonl
@@ -15,11 +61,6 @@ tasks:
   publish:
     cadence: on_demand
     entrypoint: scripts/publish.py
-    outputs:
-      - data/papers.jsonl
-      - data/jobs.jsonl
-      - data/sources.jsonl
-      - data/processed/landscape_drafts/
   radar_update:
     cadence: every 2-3 days
     entrypoints:
@@ -29,18 +70,12 @@ tasks:
   weekly_brief:
     cadence: weekly
     entrypoint: scripts/generate_weekly.py
-    output: data/weekly/
   monthly_review:
     cadence: monthly
     entrypoint: scripts/generate_monthly.py
-    output: data/monthly/
   build_site:
-    cadence: after_publish
+    cadence: after_publish_or_discovery_import
     entrypoint: scripts/build_site.py
-    outputs:
-      - site/
   deploy:
     cadence: after_build
     entrypoint: scripts/deploy.py
-    outputs:
-      - site/deploy-manifest.json

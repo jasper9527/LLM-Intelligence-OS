@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% set active = "discovery" %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Automation inbox</p>
+  <h1>Codex Discovery Review</h1>
+  <p>Candidate evidence discovered by scheduled Codex tasks. These items remain review candidates or draft events until explicitly published.</p>
+</section>
+
+<div class="grid">
+  <div class="kpi"><strong>{{ codex_candidates|length }}</strong><span>candidate records</span></div>
+  <div class="kpi"><strong>{{ codex_runs|length }}</strong><span>run logs</span></div>
+  <div class="kpi"><strong>{{ review_summary.draft_count }}</strong><span>draft events</span></div>
+</div>
+
+<section class="stack" style="margin-top:22px">
+  <h2>Candidate evidence</h2>
+  {% for item in codex_candidates %}
+  <article class="card" id="{{ item.candidate_id or loop.index }}">
+    <div class="meta">{{ item.date }} · {{ item.source }} · {{ item.content_type }} · {{ item.candidate_file }}</div>
+    <h3>{% if item.url %}<a href="{{ item.url }}">{{ item.title }}</a>{% else %}{{ item.title }}{% endif %}</h3>
+    <p>{{ item.short_summary }}</p>
+    <p><span class="tag">credibility: {{ item.credibility }}</span><span class="tag">novelty: {{ item.novelty }}</span><span class="tag">relevance: {{ item.relevance }}</span></p>
+    <p><strong>Why it matters:</strong> {{ item.why_it_matters }}</p>
+    <p><strong>Why maybe not:</strong> {{ item.why_maybe_not }}</p>
+    <p><strong>Uncertainty:</strong> {{ item.uncertainty }}</p>
+    <p><strong>Route suggestion:</strong> {{ item.route_suggestion }}</p>
+  </article>
+  {% else %}
+  <article class="card"><p>No Codex discovery candidates yet.</p></article>
+  {% endfor %}
+</section>
+
+<section class="stack" style="margin-top:22px">
+  <h2>Run logs</h2>
+  {% for run in codex_runs %}
+  <article class="card compact">
+    <h3>{{ run.run_id or run.run_file }}</h3>
+    <p class="muted">{{ run.generated_at or run.completed_at or "" }} · {{ run.run_file }}</p>
+    <pre>{{ run|tojson(indent=2) }}</pre>
+  </article>
+  {% else %}
+  <article class="card"><p>No Codex discovery run logs yet.</p></article>
+  {% endfor %}
+</section>
+{% endblock %}
