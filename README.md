@@ -18,6 +18,8 @@ The system is intentionally scoped to **information work only**: it collects evi
 
 ```bash
 python -m pip install --index-url https://pypi.org/simple -r requirements.txt
+python scripts/validate_codex_candidates.py
+python scripts/import_codex_candidates.py
 python scripts/collect.py
 python scripts/review.py
 python scripts/publish.py --all-recommended
@@ -26,6 +28,18 @@ python scripts/deploy.py
 ```
 
 Generated HTML is written to `site/`. Raw snapshots land in `data/raw/snapshots/`. Draft review metadata lands in `data/processed/`.
+
+## Codex automation-first discovery
+
+The preferred cloud workflow is now Codex automation-first:
+
+1. Codex discovery tasks write candidate evidence to `data/codex_discovery/candidates/` and run logs to `data/codex_discovery/runs/`.
+2. `python scripts/validate_codex_candidates.py` checks required fields, evidence presence, and level values.
+3. `python scripts/import_codex_candidates.py` converts valid candidates into Event Stream draft records without publishing them.
+4. `python scripts/review.py` and `site/discovery.html`/`site/drafts.html` expose candidates and drafts for review.
+5. Existing scripted collectors remain as stable-source support for RSS/API/job-board inputs.
+
+Reusable Codex automation prompts live in `config/prompts/`.
 
 ## GitHub Pages
 

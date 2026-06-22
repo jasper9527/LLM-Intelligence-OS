@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% set page_description = "Codex automation-discovered candidate evidence before it enters the formal review pipeline." %}
+{% block content %}
+  <section class="grid">
+    <article class="kpi"><span class="muted">Candidate evidence</span><strong>{{ codex_discovery.candidates|length }}</strong></article>
+    <article class="kpi"><span class="muted">Discovery runs</span><strong>{{ codex_discovery.runs|length }}</strong></article>
+    <article class="kpi"><span class="muted">Valid candidates</span><strong>{{ codex_discovery.validation.valid_candidates }}</strong></article>
+    <article class="kpi"><span class="muted">Invalid candidates</span><strong>{{ codex_discovery.validation.invalid_candidates|length }}</strong></article>
+  </section>
+
+  <div class="split" style="margin-top:18px">
+    <section class="stack">
+      <article class="card">
+        <div class="section-title">
+          <h2>Candidate Evidence Inbox</h2>
+          <span class="muted">Draft-first, no auto-publish</span>
+        </div>
+        <p class="callout">Codex Discovery writes candidate evidence here first. Valid candidates can be imported into Event Stream draft, then reviewed, published, rejected, or archived.</p>
+        <div class="list">
+          {% for candidate in codex_discovery.candidates %}
+            <article class="card compact" id="{{ candidate.candidate_id }}">
+              <div class="section-title">
+                <h3>{% if candidate.url %}<a href="{{ candidate.url }}">{{ candidate.title }}</a>{% else %}{{ candidate.title }}{% endif %}</h3>
+                <span class="tag {% if candidate.novelty == 'breakout' %}good{% elif candidate.relevance == 'low' %}warn{% endif %}">{{ candidate.novelty or 'unknown' }}</span>
+              </div>
+              <p class="muted">{{ candidate.short_summary }}</p>
+              <p><strong>Why it matters:</strong> {{ candidate.why_it_matters or 'Not provided.' }}</p>
+              <p><strong>Why maybe not:</strong> {{ candidate.why_maybe_not or candidate.uncertainty or 'Not provided.' }}</p>
+              <div>
+                <span class="tag">credibility: {{ candidate.credibility or 'unknown' }}</span>
+                <span class="tag">relevance: {{ candidate.relevance or 'unknown' }}</span>
+                <span class="tag">source: {{ candidate.source_type or 'unknown' }}</span>
+                <span class="tag">content: {{ candidate.content_type or 'unknown' }}</span>
+              </div>
+              <div style="margin-top:8px">
+                {% for tag in candidate.signal_tags or [] %}<span class="tag warn">{{ tag }}</span>{% endfor %}
+                {% for tag in candidate.area_tags or [] %}<span class="tag">{{ tag }}</span>{% endfor %}
+                {% for route in candidate.route_suggestion or [] %}<span class="tag good">route: {{ route }}</span>{% endfor %}
+              </div>
+              <p class="muted">Run: {{ candidate.discovery_run_id }} · Candidate: {{ candidate.candidate_id }} · File: {{ candidate.candidate_file }}</p>
+              {% if candidate.skip_reason %}<p class="muted"><strong>Skip reason:</strong> {{ candidate.skip_reason }}</p>{% endif %}
+            </article>
+          {% else %}
+            <p class="muted">No Codex Discovery candidates yet. Configure a Codex automation task with the prompts in <code>config/prompts/</code>.</p>
+          {% endfor %}
+        </div>
+      </article>
+    </section>
+
+    <section class="stack">
+      <article class="card compact">
+        <h2>Recent Discovery Runs</h2>
+        <ul class="inline-list">
+          {% for run in codex_discovery.runs[:10] %}
+            <li><strong>{{ run.run_id or run.run_type }}</strong> · {{ run.finished_at or run.started_at }} · candidates={{ run.candidates_written or 0 }}</li>
+          {% else %}
+            <li class="muted">No discovery runs recorded.</li>
+          {% endfor %}
+        </ul>
+      </article>
+
+      <article class="card compact">
+        <h2>Validation Issues</h2>
+        <ul class="inline-list">
+          {% for item in codex_discovery.validation.invalid_candidates %}
+            <li><strong>{{ item.candidate_id or item.title }}</strong>: {{ item.errors|join(', ') }}</li>
+          {% else %}
+            <li class="muted">No invalid candidates detected.</li>
+          {% endfor %}
+        </ul>
+      </article>
+    </section>
+  </div>
+{% endblock %}

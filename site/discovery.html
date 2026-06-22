@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title }} | LLM Intelligence OS</title>
+  <title>Codex Discovery | LLM Intelligence OS</title>
   <style>
     :root{
       --paper:#f7f0e3;
@@ -175,29 +175,63 @@
       h1{font-size:34px}
     }
   </style>
-  {% block extra_head %}{% endblock %}
 </head>
 <body>
   <div class="shell">
     <header class="hero">
       <p class="eyebrow">Codex-native intelligence system</p>
-      <h1>{{ title }}</h1>
-      <p>{{ page_description or "A reading-first operating system for LLM research, hiring, and landscape signals." }}</p>
+      <h1>Codex Discovery</h1>
+      <p>Codex automation-discovered candidate evidence before it enters the formal review pipeline.</p>
       <nav>
-        <a href="index.html" class="{% if title == 'LLM Intelligence OS' %}active{% endif %}">Home</a>
-        <a href="events.html" class="{% if title == 'Event Stream' %}active{% endif %}">Events</a>
-        <a href="jobs.html" class="{% if title == 'Job & Company Radar' %}active{% endif %}">Jobs</a>
-        <a href="research.html" class="{% if title == 'Research Radar' %}active{% endif %}">Research</a>
-        <a href="landscape.html" class="{% if title == 'Tech Landscape' %}active{% endif %}">Landscape</a>
-        <a href="sources.html" class="{% if title == 'Source Map' %}active{% endif %}">Sources</a>
-        <a href="reports.html" class="{% if title == 'Reports' %}active{% endif %}">Reports</a>
-        <a href="discovery.html" class="{% if title == 'Codex Discovery' %}active{% endif %}">Discovery</a>
-        <a href="drafts.html" class="{% if title == 'Draft Review' %}active{% endif %}">Drafts</a>
+        <a href="index.html" class="">Home</a>
+        <a href="events.html" class="">Events</a>
+        <a href="jobs.html" class="">Jobs</a>
+        <a href="research.html" class="">Research</a>
+        <a href="landscape.html" class="">Landscape</a>
+        <a href="sources.html" class="">Sources</a>
+        <a href="reports.html" class="">Reports</a>
+        <a href="discovery.html" class="active">Discovery</a>
+        <a href="drafts.html" class="">Drafts</a>
       </nav>
     </header>
-    {% block content %}{% endblock %}
+  <section class="grid">
+    <article class="kpi"><span class="muted">Candidate evidence</span><strong>0</strong></article>
+    <article class="kpi"><span class="muted">Discovery runs</span><strong>0</strong></article>
+    <article class="kpi"><span class="muted">Valid candidates</span><strong>0</strong></article>
+    <article class="kpi"><span class="muted">Invalid candidates</span><strong>0</strong></article>
+  </section>
+
+  <div class="split" style="margin-top:18px">
+    <section class="stack">
+      <article class="card">
+        <div class="section-title">
+          <h2>Candidate Evidence Inbox</h2>
+          <span class="muted">Draft-first, no auto-publish</span>
+        </div>
+        <p class="callout">Codex Discovery writes candidate evidence here first. Valid candidates can be imported into Event Stream draft, then reviewed, published, rejected, or archived.</p>
+        <div class="list">
+            <p class="muted">No Codex Discovery candidates yet. Configure a Codex automation task with the prompts in <code>config/prompts/</code>.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="stack">
+      <article class="card compact">
+        <h2>Recent Discovery Runs</h2>
+        <ul class="inline-list">
+            <li class="muted">No discovery runs recorded.</li>
+        </ul>
+      </article>
+
+      <article class="card compact">
+        <h2>Validation Issues</h2>
+        <ul class="inline-list">
+            <li class="muted">No invalid candidates detected.</li>
+        </ul>
+      </article>
+    </section>
+  </div>
     <footer>Generated from JSONL/JSON evidence. Published pages show only records with <code>status=published</code>.</footer>
   </div>
-  {% block scripts %}{% endblock %}
 </body>
 </html>
