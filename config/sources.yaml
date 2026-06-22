@@ -75,3 +75,20 @@ sources:
     not_good_for: unattended market coverage
     route_defaults:
       content_type: note
+  - source_id: codex-discovery
+    name: Codex Discovery
+    enabled: false
+    source_type: codex_discovery
+    collector_kind: codex_discovery
+    url: codex://discovery
+    cadence: daily
+    credibility_default: medium
+    coverage: Codex automation-discovered candidate evidence from non-fixed sources.
+    noise_level: medium
+    bias: depends on search focus, source access, and prompt framing
+    best_for: semantic discovery, cross-source comparison, breakout signals, and non-structured evidence
+    not_good_for: deterministic complete coverage or direct publication without review
+    route_defaults:
+      content_type: note
+      signal_tags:
+        - signal:codex-discovery

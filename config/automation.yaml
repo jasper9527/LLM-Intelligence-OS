@@ -1,6 +1,43 @@
 tasks:
+  codex_daily_discovery:
+    cadence: daily
+    mode: codex_automation
+    prompt: config/prompts/codex_daily_discovery.md
+    writes:
+      - data/codex_discovery/candidates/
+      - data/codex_discovery/runs/
+    follow_up_commands:
+      - python scripts/validate_codex_candidates.py
+      - python scripts/import_codex_candidates.py
+      - python scripts/review.py
+      - python scripts/build_site.py
+  codex_weekly_deep_discovery:
+    cadence: weekly before weekly_brief
+    mode: codex_automation
+    prompt: config/prompts/codex_weekly_deep_discovery.md
+    writes:
+      - data/codex_discovery/candidates/
+      - data/codex_discovery/runs/
+    follow_up_commands:
+      - python scripts/validate_codex_candidates.py
+      - python scripts/import_codex_candidates.py
+      - python scripts/generate_weekly.py
+      - python scripts/build_site.py
+  codex_source_scout:
+    cadence: biweekly
+    mode: codex_automation
+    prompt: config/prompts/codex_source_scout.md
+    writes:
+      - data/codex_discovery/source_candidates/
+  codex_monthly_synthesis_candidate:
+    cadence: monthly before monthly_review
+    mode: codex_automation
+    prompt: config/prompts/codex_monthly_synthesis_candidate.md
+    writes:
+      - data/codex_discovery/landscape_update_candidates/
   daily_collect:
     cadence: 1-2 times daily
+    mode: scripted_stable_collector
     entrypoint: scripts/collect.py
     outputs:
       - data/raw/snapshots/

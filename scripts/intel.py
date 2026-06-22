@@ -123,6 +123,12 @@ DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 LANDSCAPE_DIR = DATA_DIR / "landscape"
+CODEX_DISCOVERY_DIR = DATA_DIR / "codex_discovery"
+CODEX_CANDIDATES_DIR = CODEX_DISCOVERY_DIR / "candidates"
+CODEX_RUNS_DIR = CODEX_DISCOVERY_DIR / "runs"
+CODEX_SOURCE_CANDIDATES_DIR = CODEX_DISCOVERY_DIR / "source_candidates"
+CODEX_LANDSCAPE_UPDATE_CANDIDATES_DIR = CODEX_DISCOVERY_DIR / "landscape_update_candidates"
+CODEX_MAPPINGS_DIR = CODEX_DISCOVERY_DIR / "mappings"
 LANDSCAPE_DRAFT_DIR = PROCESSED_DIR / "landscape_drafts"
 WEEKLY_DIR = DATA_DIR / "weekly"
 MONTHLY_DIR = DATA_DIR / "monthly"
@@ -145,6 +151,12 @@ def ensure_layout() -> None:
         RAW_DIR / "snapshots",
         PROCESSED_DIR,
         LANDSCAPE_DRAFT_DIR,
+        CODEX_DISCOVERY_DIR,
+        CODEX_CANDIDATES_DIR,
+        CODEX_RUNS_DIR,
+        CODEX_SOURCE_CANDIDATES_DIR,
+        CODEX_LANDSCAPE_UPDATE_CANDIDATES_DIR,
+        CODEX_MAPPINGS_DIR,
         WEEKLY_DIR,
         MONTHLY_DIR,
         SITE_DIR,
@@ -688,6 +700,159 @@ def load_candidate_tags() -> list[dict[str, Any]]:
     return load_json(CANDIDATE_TAGS_PATH, [])
 
 
+def candidate_files() -> list[Path]:
+    ensure_layout()
+    return sorted(CODEX_CANDIDATES_DIR.glob("*.jsonl"))
+
+
+def load_codex_candidates() -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for path in candidate_files():
+        for candidate in load_jsonl(path):
+            candidate.setdefault("candidate_file", str(path.relative_to(ROOT)))
+            records.append(candidate)
+    return sorted(records, key=lambda item: (item.get("date_found", ""), item.get("title", "")), reverse=True)
+
+
+def load_codex_runs() -> list[dict[str, Any]]:
+    ensure_layout()
+    runs = [load_json(path, {}) for path in sorted(CODEX_RUNS_DIR.glob("*.json"), reverse=True)]
+    return [item for item in runs if item]
+
+
+def candidate_validation_errors(candidate: dict[str, Any]) -> list[str]:
+    required = (
+        "candidate_id",
+        "discovery_run_id",
+        "date_found",
+        "title",
+        "source_name",
+        "source_type",
+        "content_type",
+        "short_summary",
+        "credibility",
+        "novelty",
+        "relevance",
+        "route_suggestion",
+    )
+    errors = [f"missing:{field}" for field in required if candidate.get(field) in ("", [], None)]
+    if candidate.get("credibility") not in {"low", "medium", "high"}:
+        errors.append("invalid:credibility")
+    if candidate.get("novelty") not in {"incremental", "notable", "breakout"}:
+        errors.append("invalid:novelty")
+    if candidate.get("relevance") not in {"low", "medium", "high"}:
+        errors.append("invalid:relevance")
+    if candidate.get("should_enter_review", True) and not (candidate.get("url") or candidate.get("evidence_note")):
+        errors.append("missing:evidence")
+    return errors
+
+
+def validate_codex_candidates() -> dict[str, Any]:
+    candidates = load_codex_candidates()
+    invalid = []
+    for candidate in candidates:
+        errors = candidate_validation_errors(candidate)
+        if errors:
+            invalid.append(
+                {
+                    "candidate_id": candidate.get("candidate_id", ""),
+                    "title": candidate.get("title", ""),
+                    "candidate_file": candidate.get("candidate_file", ""),
+                    "errors": errors,
+                }
+            )
+    return {
+        "total_candidates": len(candidates),
+        "valid_candidates": len(candidates) - len(invalid),
+        "invalid_candidates": invalid,
+    }
+
+
+def candidate_to_raw_record(candidate: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "source_id": "codex-discovery",
+        "collector_kind": "codex_discovery",
+        "ingestion_mode": "codex_discovery",
+        "title": candidate.get("title", "").strip(),
+        "url": candidate.get("url", "").strip(),
+        "published_at": candidate.get("evidence_date") or candidate.get("date_found") or iso_today(),
+        "summary": candidate.get("short_summary", ""),
+        "content_type": candidate.get("content_type", "note"),
+        "entities": normalize_list(candidate.get("entities")),
+        "suggested_tags": {
+            "area_tags": normalize_list(candidate.get("area_tags")),
+            "method_tags": normalize_list(candidate.get("method_tags")),
+            "task_tags": normalize_list(candidate.get("task_tags")),
+            "job_tags": normalize_list(candidate.get("job_tags")),
+            "signal_tags": normalize_list(candidate.get("signal_tags")),
+        },
+        "notes": candidate.get("evidence_note", ""),
+        "why_it_matters": candidate.get("why_it_matters", ""),
+        "why_maybe_not": candidate.get("why_maybe_not") or candidate.get("uncertainty", ""),
+        "company": candidate.get("company", ""),
+        "team": candidate.get("team", ""),
+        "location": candidate.get("location", ""),
+        "positive_signals": normalize_list(candidate.get("positive_signals")),
+        "red_flags": normalize_list(candidate.get("red_flags")),
+        "common_keywords": normalize_list(candidate.get("common_keywords")),
+        "codex_candidate_id": candidate.get("candidate_id", ""),
+        "codex_discovery_run_id": candidate.get("discovery_run_id", ""),
+    }
+
+
+def import_codex_candidates() -> dict[str, Any]:
+    ensure_layout()
+    candidates = load_codex_candidates()
+    valid_candidates = [
+        candidate
+        for candidate in candidates
+        if candidate.get("should_enter_review", True) and not candidate_validation_errors(candidate)
+    ]
+    source_map = source_index(load_sources_config())
+    source_map.setdefault(
+        "codex-discovery",
+        {
+            "source_id": "codex-discovery",
+            "name": "Codex Discovery",
+            "source_type": "codex_discovery",
+            "credibility_default": "medium",
+            "route_defaults": {"content_type": "note", "signal_tags": ["signal:codex-discovery"]},
+        },
+    )
+    taxonomy = taxonomy_sets()
+    routing = load_routing_config()
+    existing_events = load_events()
+    candidate_tags = load_candidate_tags()
+    new_events: list[dict[str, Any]] = []
+    mappings: list[dict[str, str]] = []
+    for candidate in valid_candidates:
+        raw_record = candidate_to_raw_record(candidate)
+        event = normalize_event(raw_record, source_map)
+        event["source"] = "Codex Discovery"
+        event["source_type"] = "codex_discovery"
+        event["codex_candidate_id"] = candidate.get("candidate_id", "")
+        event["codex_discovery_run_id"] = candidate.get("discovery_run_id", "")
+        event["route_suggestion"] = normalize_list(candidate.get("route_suggestion"))
+        event, new_candidates = classify_event(event, taxonomy)
+        event["signal_tags"] = unique(normalize_list(event.get("signal_tags")) + ["signal:codex-discovery"])
+        event = route_event(event, routing)
+        event["routed_to"] = unique(normalize_list(event.get("routed_to")) + normalize_list(candidate.get("route_suggestion")))
+        candidate_tags.extend(new_candidates)
+        new_events.append(event)
+        mappings.append({"candidate_id": candidate.get("candidate_id", ""), "event_id": event["id"]})
+    merged = dedupe_events(existing_events + new_events)
+    save_events(merged)
+    save_candidate_tags(candidate_tags)
+    write_json(CODEX_MAPPINGS_DIR / "candidate_event_mappings.json", mappings)
+    update_review_summary()
+    return {
+        "candidates": len(candidates),
+        "valid_review_candidates": len(valid_candidates),
+        "imported_events": len(new_events),
+        "total_events": len(merged),
+    }
+
+
 def save_candidate_tags(candidates: list[dict[str, Any]]) -> None:
     ordered = sorted(
         {
@@ -1153,6 +1318,9 @@ def build_context() -> dict[str, Any]:
     )[:8]
     counts = page_counts()
     review_summary = load_json(REVIEW_SUMMARY_PATH, default_review_summary(draft_events, events))
+    codex_candidates = load_codex_candidates()
+    codex_runs = load_codex_runs()
+    codex_validation = validate_codex_candidates()
     return {
         "counts": counts,
         "events": published_events,
@@ -1170,6 +1338,11 @@ def build_context() -> dict[str, Any]:
         "breakout_events": breakout_events,
         "read_queue": read_queue,
         "review_summary": review_summary,
+        "codex_discovery": {
+            "candidates": codex_candidates,
+            "runs": codex_runs,
+            "validation": codex_validation,
+        },
         "event_filter_options": {
             "source_types": sorted({item.get("source_type", "") for item in published_events if item.get("source_type")}),
             "area_tags": sorted({tag for item in published_events for tag in normalize_list(item.get("area_tags"))}),
@@ -1197,6 +1370,7 @@ def build_site() -> list[Path]:
         ("landscape.html", "landscape.html", "Tech Landscape"),
         ("sources.html", "sources.html", "Source Map"),
         ("reports.html", "reports.html", "Reports"),
+        ("discovery.html", "discovery.html", "Codex Discovery"),
         ("drafts.html", "drafts.html", "Draft Review"),
     ):
         template = environment.get_template(template_name)

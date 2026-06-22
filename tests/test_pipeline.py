@@ -63,6 +63,52 @@ class PipelineTestCase(unittest.TestCase):
         finally:
             shutil.rmtree(root)
 
+    def test_codex_candidate_imports_to_draft_event(self) -> None:
+        root, intel = self.make_root()
+        try:
+            candidate = {
+                "candidate_id": "codex-001",
+                "discovery_run_id": "daily-2026-06-21",
+                "date_found": "2026-06-21",
+                "evidence_date": "2026-06-21",
+                "title": "Codex-discovered benchmark signal",
+                "url": "https://example.com/codex-benchmark",
+                "source_name": "Example Lab",
+                "source_type": "company_blog",
+                "content_type": "benchmark",
+                "short_summary": "A Codex-discovered benchmark update with eval implications.",
+                "why_it_matters": "Connects eval movement to model behavior tracking.",
+                "why_maybe_not": "Single-source signal pending broader confirmation.",
+                "evidence_note": "Official example lab post.",
+                "credibility": "medium",
+                "novelty": "notable",
+                "relevance": "high",
+                "uncertainty": "Needs cross-source confirmation.",
+                "entities": ["Example Lab"],
+                "area_tags": ["area:eval-judge-benchmark"],
+                "signal_tags": ["signal:benchmark"],
+                "route_suggestion": ["research", "weekly_brief_candidate"],
+                "should_enter_review": True,
+                "created_by": "codex_automation",
+            }
+            candidate_path = root / "data/codex_discovery/candidates/2026-06-21.jsonl"
+            candidate_path.parent.mkdir(parents=True, exist_ok=True)
+            candidate_path.write_text(json.dumps(candidate) + "\n", encoding="utf-8")
+
+            validation = intel.validate_codex_candidates()
+            result = intel.import_codex_candidates()
+            events = intel.load_jsonl(root / "data/events.jsonl")
+
+            self.assertEqual(validation["invalid_candidates"], [])
+            self.assertEqual(result["imported_events"], 1)
+            self.assertEqual(len(events), 1)
+            self.assertEqual(events[0]["status"], "draft")
+            self.assertEqual(events[0]["source_type"], "codex_discovery")
+            self.assertIn("signal:codex-discovery", events[0]["signal_tags"])
+            self.assertIn("weekly_brief_candidate", events[0]["routed_to"])
+        finally:
+            shutil.rmtree(root)
+
     def test_publish_refresh_and_site_build_produce_reading_surfaces(self) -> None:
         root, intel = self.make_root()
         try:
@@ -112,8 +158,9 @@ class PipelineTestCase(unittest.TestCase):
 
             self.assertGreaterEqual(refresh["papers"], 1)
             self.assertGreaterEqual(refresh["jobs"], 1)
-            self.assertEqual(len(pages), 8)
+            self.assertEqual(len(pages), 9)
             self.assertTrue((root / "site/events.html").exists())
+            self.assertTrue((root / "site/discovery.html").exists())
             self.assertTrue((root / "site/drafts.html").exists())
             self.assertTrue(list((root / "data/weekly").glob("*.json")))
             events_html = (root / "site/events.html").read_text(encoding="utf-8")

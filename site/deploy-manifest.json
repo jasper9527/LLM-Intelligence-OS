@@ -1,8 +1,9 @@
 {
   "target": "codex-preview-adapter",
-  "generated_at": "2026-06-20T10:02:36Z",
+  "generated_at": "2026-06-21T05:16:25Z",
   "entrypoint": "index.html",
   "pages": [
+    "discovery.html",
     "drafts.html",
     "events.html",
     "index.html",
